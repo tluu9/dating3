@@ -1,0 +1,19 @@
+
+{
+
+  "name" : "tluu9/IT328/dating3",
+  "authors" :
+  [
+    {
+      "name" : "Trang Luu",
+      "email" : "tluu9@mail.greenriver.edu"
+    }
+  ],
+  "require" :
+  {
+    "bcosca/fatfree-core" : "dev-master"
+  },
+  "autoload": {
+    "classmap": ["classes/"]
+  }
+}
