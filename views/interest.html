@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dating Website</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="styles/style.css">
+    <title>Interests</title>
+</head>
+<body>
+
+<h3>My Dating Website</h3>
+
+<form action="#" method="post">
+    <div class="container-fluid">
+        <div class="row content">
+        <h2>Interests</h2><hr>
+
+
+        <div>
+        <!--In-door-->
+            <div class="col-sm-12">
+                <label><strong>In-door Interests</strong></label></p>
+            </div>
+
+            <div class="col-sm-3 ">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="tv">
+                        <check if="{{@indoor === 'tv'}}">checked</check>TV
+                </div>
+
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="puzzles">
+                        <check if="{{@indoor === 'puzzles'}}">checked</check>Puzzles
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="movies">
+                        <check if="{{@indoor === 'movies'}}">checked</check>Movies
+                </div>
+
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="reading">
+                        <check if="{{@indoor === 'reading'}}">checked</check>Reading
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="cooking">
+                        <check if="{{@indoor === 'cooking'}}">checked</check>Cooking
+                </div>
+
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="playing cards">
+                        <check if="{{@indoor === 'playing cards'}}">checked</check>Playing cards
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="board games">
+                        <check if="{{@indoor === 'board games'}}">checked</check>Board games
+                </div>
+
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="indoor[]" value="video games">
+                        <check if="{{@indoor === 'video games'}}">checked</check>Video games
+                </div>
+            </div>
+        </div>
+
+
+        <!--Out-door-->
+        <div >
+            <div class="col-sm-12">
+                <br><label><strong>Out-door Interests</strong></label>
+            </div>
+
+            <div class="col-sm-3 ">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="outdoor[]" value="hiking">
+                        <check if="{{@outdoor === 'hiking'}}">checked</check> Hiking
+                </div>
+
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="outdoor[]" value="walking">
+                        <check if="{{@outdoor === 'walking'}}">checked</check>Walking
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="outdoor[]" value="biking">
+                        <check if="{{@outdoor === 'biking'}}">checked</check> Biking
+                </div>
+
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="outdoor[]" value="climbing">
+                        <check if="{{@outdoor === 'climbing'}}">checked</check> Climbing
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="outdoor[]" value="swimming">
+                        <check if="{{@outdoor === 'swimming'}}">checked</check> Swimming
+                </div>
+            </div>
+
+            <div class="col-sm-3">
+                <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="outdoor[]" value="collecting">
+                        <check if="{{@outdoor === 'collecting'}}">checked</check>Collecting
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="bottom">
+                <button type="submit" class="btn btn-primary" align="right">Next ></button>
+            </div>
+        </div>
+    </div>
+    </div>
+</form>
+
+</body>
+</html>

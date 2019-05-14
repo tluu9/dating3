@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <title>Dating Website</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="styles/style.css">
+</head>
+<body>
+
+<h3>My Dating Website</h3>
+
+<form action="#" method="post">
+        <div class="container-fluid">
+        <div class="row content">
+            <div class="col-sm-12">
+                <h1>Profile</h1>
+                <hr>
+            </div>
+        </div>
+
+        <!--Email-->
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label><strong>Email</strong></label>
+                        <input type="email" class="form-control" name="email">
+                        <check if="{{ @errors['email'] }}">
+                            <span class="err">{{ @errors['email'] }}</span></check>
+                </div>
+        <!--State-->
+                <div class="form-group">
+                    <label for="state"><strong>State</strong></label>
+                    <select name="state" id="state" class="form-control custom-select">
+                        <repeat group="{{ @states }}" value="{{ @state }}">
+                            <option value="{{ @state }}">
+                            <check if="{{isset(@SESSION.state) && @SESSION.state == @state }}"></check>
+                            {{ @state }}
+                            </option>
+                        </repeat>
+                    </select>
+                </div>
+            </div>
+        <!--Biography-->
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <label><strong>Biography</strong></label>
+                        <textarea class="form-control" id= "bio" name="bio" rows="5"></textarea>
+                </div>
+            </div>
+        </div>
+        <!--Seeking-->
+        <div id="radioButton" class="row">
+            <div class="col-sm-12">
+                <label><strong>Seeking</strong></label>
+            </div>
+            <div class="col-sm-3">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="seeking" value="Male">
+                        Male
+                    </label>
+                </div>
+            </div>
+        <!--Radio button-->
+            <div class="col-sm-3">
+                <div class="form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" type="radio" name="seeking" value="Female">
+                        Female
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!--Add a button-->
+             <div class="bottom">
+                <button type="submit" class="btn btn-primary" align="right">Next ></button>
+             </div>
+        </div>
+    </div>
+</form>
+</body>
+</html>
