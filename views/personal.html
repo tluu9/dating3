@@ -1,0 +1,107 @@
+<!--
+Trang Luu
+20 Apil 2019
+Dating Website/ HTML Home page
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dating Website</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="styles/style.css">
+
+</head>
+<body>
+
+<h3>My Dating Website</h3>
+<form method="post" action="#">
+<div class="container-fluid">
+    <div class="row content">
+
+        <h2> Personal Information</h2>
+        <hr>
+        <div class="col-sm-8">
+
+
+                <!--first name-->
+                <div class="form-group">
+                    <label><strong>First Name</strong> </label>
+                    <input type="text" name="fname" value="{{@fname}}" class="form-control"  placeholder="Sarah">
+                    <check if="{{ @errors['fname'] }}">
+                        <span class="text-danger">{{ @errors['fname'] }}</span>
+                    </check>
+                </div>
+
+
+                <!--last name-->
+                <div class="form-group">
+                    <label ><strong>Last Name</strong></label>
+                    <input type="text" name="lname" value="{{@lname}}" class="form-control"  placeholder="Smith">
+                    <check if="{{ @errors['lname'] }}">
+                        <span class="text-danger">{{ @errors['lname'] }}</span>
+                    </check>
+                </div>
+
+                <!--age-->
+            <div class="form-group">
+                <label><strong>Age</strong></label>
+                    <input type="text" class="form-control" name="age" value="{{@age}}">
+                <check if="{{ @errors['age'] }}">
+                    <span class="text-danger">{{ @errors['age'] }}</span>
+                </check>
+            </div>
+
+                <!--gender-->
+            <div class="form-group">
+                <p><strong>Gender</strong></p>
+                <repeat group="{{@genders}}" value="{{@selectedGender}}">
+                    <div class="form-check form-check-inline">
+                        <label class="form-check-label">
+                            <input class="form-check-input" type="radio"
+                                   name="gender" value="{{@selectedGender}}"
+                            <check if="{{ @selectedGender == @gender }}">
+                                checked="checked"
+                            </check>>
+                            {{ @selectedGender }}
+                        </label>
+                    </div>
+                </repeat>
+            </div>
+
+                <!--phone-->
+                <div class="form-group">
+                    <label><strong>Phone Number</strong></label>
+                    <input type="tel" name="phone" class="form-control" value="{{@phone}}" placeholder="222-333-4444">
+                    <check if="{{ @errors['phone'] }}">
+                        <span class="text-danger">{{ @errors['phone'] }}</span>
+                    </check>
+                </div>
+
+            <!--Premium membership-->
+                <div class="form-group">
+                    <p><strong>Premium Membership</strong></p>
+                    <input type="checkbox" name="membership" value="premium"<check if="{{@membership==='premium'}}">checked</check>>
+                     Sign me up for a Premium Account!
+                </div>
+        </div>
+
+
+        <!--Add a note-->
+        <div class="col-sm-4 sidenav">
+            <p class="note"><strong>Note: </strong>All information entered is protected by our <a href="privacy">
+                privacy policy. </a>Profile information can only be viewed by others with your permission.</p><br><br><br>
+            <!--Add a button-->
+            <div class="bottom">
+                <br><br><br><button type="submit" class="btn btn-primary" align="right">Next ></button>
+            </div>
+        </div>
+    </div>
+</div>
+</form>
+</body>
+</html>
