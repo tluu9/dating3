@@ -1,0 +1,99 @@
+<!--
+Trang Luu
+20 Apil 2019
+Dating Website/ HTML Home page
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Dating Website</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+    <link rel="stylesheet" href="styles/style.css">
+
+</head>
+<body>
+<h3>My Dating Website</h3>
+
+
+    <div class="container-fluid">
+        <div class="row content">
+
+            <!--table-->
+            <div class="col-sm-6">
+
+                    <table class="table table-bordered">
+                        <tbody>
+
+                        <tr>
+                            <td>Name: {{$_SESSION['member']->getFname()}} {{$_SESSION['member']->getLname() }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Gender: {{$_SESSION['member']->getGender()}}</td>
+
+                        </tr>
+
+                        <tr>
+                            <td>Age: {{$_SESSION['member']->getAge()}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Phone: {{$_SESSION['member']->getPhone()}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Email: {{$_SESSION['member']->getEmail()}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>State: {{$_SESSION['member']->getState()}}</td>
+                        </tr>
+
+                        <tr>
+                            <td>Seeking: {{$_SESSION['member']->getSeeking()}}</td>
+                        </tr>
+
+                        <tr>
+                            <check if="{{$_SESSION['member'] instanceOf PremiumMember}}">
+                                <td>Interests:
+                                    <repeat group="{{@SESSION.indoor}}" value="{{@indoor}}">
+                                        {{@indoor}},
+                                    </repeat>
+                                    <repeat group="{{@SESSION.outdoor}}" value="{{@outdoor}}">
+                                        {{@outdoor}},
+                                    </repeat>
+                                </td>
+                            </check>
+
+
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+            </div>
+
+            <!--bio-->
+            <div class="col-sm-6 sidenav">
+                <img class="center" src="images/avatar.png" width="300" height="300" alt="profile picture">
+                <center><h4>Biography</h4></center>
+               <center><p>{{$_SESSION['bio']}}</p></center>
+            </div>
+
+        </div>
+
+        <!--button-->
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                <button class="btn btn-primary bottomMargin">Contact Me!</button>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
