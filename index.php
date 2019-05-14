@@ -1,160 +1,200 @@
 <?php
-/**
-Trang Luu
-20 Apil 2019
-Dating Website/ HTML Home page
-*/
+//Require autoload file
+require_once('vendor/autoload.php');
+
 session_start();
 
-//Turn on error reporting
-ini_set('display_errors', 1);
+ini_set('display_errors', true);
 error_reporting(E_ALL);
 
-//require the autoload file autoload.php
-require_once('vendor/autoload.php');
+//validate file
 require_once('model/validate.php');
 
-//Create an instance of the Base class/ instantiate Fat-Free
+//Create an instance of the Base class
 $f3 = Base::instance();
 
-//Turn on Fat-free error reporting/Debugging
-$f3->set('DEBUG',3);
+/**
+ * set arrays
+ */
+//states
+$f3->set('states', array('Alabama','Alaska','Arizona','Arkansas','California',
+    'Colorado','Connecticut','Delaware','District of Columbia','Florida','Georgia',
+    'Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana',
+    'Maine','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri',
+    'Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York',
+    'North Carolina','North Dakota','Ohio','Oklahoma','Oregon','Pennsylvania','Rhode Island',
+    'South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virginia','Washington',
+    'West Virginia','Wisconsin','Wyoming'));
 
-//Genders array
-$f3-> set('genders', array('Male', 'Female'));
+//in-door
+$f3->set("indoorInterests", array('tv', 'puzzles', 'movies', 'reading', 'cooking', 'playing cards', 'board games', 'video games'));
 
-//State
-$f3->set('states', array('Alabama', 'Alaska', 'Arizona', 'Arkansas', 'California',
-    'Colorado', 'Connecticut', 'Delaware', 'Florida', 'Georgia', 'Hawaii', 'Idaho','District of Columbia',
-    'Iowa','Illinois', 'Indiana', 'Iowa', 'Kansas', 'Kentucky', 'Louisiana ', 'Maine',
-    'Maryland', 'Massachusetts', 'Michigan', 'Minnesota', 'Mississippi', 'Missouri',
-    'Montana', 'Nebraska', 'Nevada', 'New Hampshire', 'New Jersey', 'New Mexico',
-    'New York', 'North Carolina', 'North Dakota', 'Ohio ', 'Oklahoma', 'Oregon ',
-    'Puerto Rico','Pennsylvania', 'Rhode Island ', 'South Carolina', 'South Dakota ', 'Tennessee',
-    'Texas ', 'Utah', 'Vermont', 'Virginia', 'Washington', 'West Virginia', 'Wisconsin ',
-    'Wyoming',
-));
+//out-door
+$f3->set("outdoorInterests", array('hiking', 'walking', 'biking', 'climbing', 'swimming', 'collecting'));
 
-//interest
-$f3->set('indoor1', array('TV', 'Movies', 'Cooking', 'Card games'));
-$f3->set('indoor2', array('Puzzles', 'Reading', 'Contests', 'Video games'));
-$f3->set('outdoor1', array('Hiking', 'Running', 'Swimming', 'Battling'));
-$f3->set('outdoor2', array('Training', 'Climbing'));
-
-//Define a default route
-$f3 ->route('GET /', function() {
+//define a default route/home page
+$f3->route('GET /', function () {
     $view = new Template();
-    echo $view ->render('views/home.html');
+    echo $view->render('views/home.html');
 });
-//form 1-personal
-$f3 ->route('POST /personal', function($f3) {
+
+//Route to information form1 - personal
+$f3->route('GET|POST /personal', function ($f3)
+{
     if(!empty($_POST))
     {
-        //get data
-        $lname = $_POST['lname'];
-        $fname = $_POST['fname'];
+        //Get data
+        $first = $_POST['first'];
+        $last = $_POST['last'];
         $age = $_POST['age'];
         $gender = $_POST['gender'];
         $phone = $_POST['phone'];
         $membership = $_POST['membership'];
 
-        //and add to hive
-        $f3->set('lname', $lname);
-        $f3->set('fname', $fname);
+        //Add to hive
+        $f3->set('first', $first);
+        $f3->set('last', $last);
         $f3->set('age', $age);
         $f3->set('gender', $gender);
         $f3->set('phone', $phone);
         $f3->set('membership', $membership);
 
-
-        if(form1())
+        //Validate form 1-personal
+        if (form1())
         {
-            $_SESSION['lname'] = $lname;
-            $_SESSION['fname'] = $fname;
+            //Session
+            $_SESSION['first'] = $first;
+            $_SESSION['last'] = $last;
             $_SESSION['age'] = $age;
-            $_SESSION['gender'] = $gender;
+            $_SESSION['phone'] = $phone;
+            if (empty($gender)) {
+                $_SESSION['gender'] = "No gender selected";
+            } else {
+                $_SESSION['gender'] = $gender;
+            }
 
-            if (!empty($membership)) {
-                $newMember = new PremiumMember($fname, $lname, $age, $gender, $phone);
-                $_SESSION['member'] = $newMember;
-                }
+            //get data from classes
+            if($membership === "premium")
+            {
+                $member = new PremiumMember($first, $last, $age, $gender, $phone);
+            }
             else
-                {
-                $newMember = new Member($fname, $lname, $age, $gender, $phone);
-                $_SESSION['member'] = $newMember;
-                }
+            {
+                $member = new Member($first, $last, $age, $gender, $phone);
+            }
+            $_SESSION['member'] = $member;
 
+            //reroute to profile
             $f3->reroute('/profile');
         }
     }
     $view = new Template();
-    echo $view ->render('views/personal.html');
+    echo $view->render('views/personal.html');
 });
 
-//form 2-profile
-$f3 ->route('GET|POST /profile', function($f3) {
+//Route to information form2 - profile
+$f3->route('GET|POST /profile', function ($f3)
+{
     if(!empty($_POST))
     {
+        //Get data
         $email = $_POST['email'];
         $state = $_POST['state'];
-        $seeking = $_POST['seeking'];
         $bio = $_POST['bio'];
-
+        $seeking = $_POST['seeking'];
+        //Add data to hive
         $f3->set('email', $email);
         $f3->set('state', $state);
-        $f3->set('seeking', $seeking);
         $f3->set('bio', $bio);
+        $f3->set('seeking', $seeking);
 
-        if(form2())
-        {
-            $_SESSION['member']->setEmail($email);
-            $_SESSION['member']->setState($state);
-            $_SESSION['member']->setSeeking($seeking);
-            $_SESSION['member']->setBio($bio);
+        //validate form 2
+        if (form2()) {
+            //Write data to Session
+            $_SESSION['email'] = $email;
+            $_SESSION['state'] = $state;
+            if (empty($bio)) {
+                $_SESSION['bio'] = "No biography";
+            }
+            else {
+                $_SESSION['bio'] = $bio;
+            }
 
-            if ($_SESSION['member'] instanceof PremiumMember)
-                {
+            if (empty($seeking)) {
+                $_SESSION['seeking'] = "Not seeking any";
+            }
+            else {
+                $_SESSION['seeking'] = $seeking;
+            }
+
+            $member = $_SESSION['member'];
+            $member->setEmail($email);
+            $member->setState($state);
+            $member->setBio($bio);
+            $member->setSeeking($seeking);
+            $_SESSION['member'] = $member;
+
+            if($member instanceof PremiumMember)
+            {
                 $f3->reroute('/interests');
-                }
-            else
-                {
-                $f3->reroute('/summary');
-                }
-        }
-    }
-    $view = new Template();
-    echo $view ->render('views/profile.html');
-});
-//form 3 interest
-$f3 ->route('GET|POST /interest', function($f3) {
-    if(!empty($_POST))
-    {
-        $indoor = $_POST['indoor'];
-        $outdoor = $_POST['outdoor'];
+            }
 
-        $f3->set('indoor', $indoor);
-        $f3->set('outdoor', $outdoor);
-
-        if(form3())
-        {
-//            $_SESSION['indoor'] = $indoor;
-//            $_SESSION['outdoor'] = $outdoor;
-
-            $_SESSION['member']->setInDoorInterests($indoor);
-            $_SESSION['member']->setOutDoorInterests($outdoor);
-
+            //reroute to summary
             $f3->reroute('/summary');
         }
     }
     $view = new Template();
-    echo $view ->render('views/interest.html');
+    echo $view->render('views/profile.html');
 });
 
-//Define the route to the summary
-$f3 ->route('GET|POST /summary', function() {
+//Route to interest
+$f3->route('GET|POST /interests', function ($f3)
+{
+    if(!empty($_POST))
+    {
+        //Get data
+        $indoor = $_POST['indoor'];
+        $outdoor = $_POST['outdoor'];
+
+        //Add to hive
+        $f3->set('indoor', $indoor);
+        $f3->set('outdoor', $outdoor);
+
+        //interests validation
+        if (validInterest()) {
+            //Session
+            //indoor
+            if (empty($indoor)) {
+                $_SESSION['indoor'] = ["no indoor interests"];
+            }
+            else {
+                $_SESSION['indoor'] = $indoor;
+            }
+            //outdoor
+            if (empty($outdoor)) {
+                $_SESSION['outdoor'] = ["no outdoor interests"];
+            }
+            else {
+                $_SESSION['outdoor'] = $outdoor;
+            }
+
+            $_SESSION['member']->setInDoorInterests($indoor);
+            $_SESSION['member']->setOutDoorInterests($outdoor);
+
+            //reroute to summary
+            $f3->reroute('/summary');
+        }
+    }
     $view = new Template();
-    echo $view ->render('views/summary.html');
+    echo $view->render('views/interest.html');
 });
 
-//Run fat free
-$f3 ->run();
+//Route to summary
+$f3->route('GET|POST /summary', function ()
+{
+    $view = new Template();
+    echo $view->render('views/summary.html');
+});
+//Run fat-free
+$f3->run();
+?>
